@@ -9,3 +9,14 @@
 /build
 /captures
 .externalNativeBuild
+
+### Gems
+android/.bundle/
+/Gemfile
+/Gemfile.lock
+/vendor/
+.bundle/
+.idea/kotlinc.xml
+fastlane/Pluginfile
+fastlane/README.md
+fastlane/report.xml

@@ -8,6 +8,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 
 private const val TAG = "MainActivity"
 private const val TEXT_CONTENTS = "Text Content"
@@ -18,6 +21,10 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCenter.start(
+            application, "3167558d823d76048952dd3484138c87e5e543da",
+            Analytics::class.java, Crashes::class.java
+        )
         Log.d(TAG,"onCreate: called")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

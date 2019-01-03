@@ -21,18 +21,49 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
+  # desc "Submit a new Beta Build to Crashlytics Beta"
+  # lane :beta do
+    # gradle(task: "clean assembleRelease")
+    # crashlytics
   
     # sh "your_script.sh"
     # You can also use other beta testing services here
-  end
+  # end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean assembleRelease")
     upload_to_play_store
   end
+
+  desc "Build custom changelog"
+    lane :build_custom_changelog do
+      changelog_notes = changelog_from_git_commits(
+        commits_count: "1",
+        merge_commit_filtering: "include_merges"
+      )
+      custom_changelog = ""
+      UI.message "Changelog: #{custom_changelog}"
+      custom_changelog
+    end
+
+  desc "Deploy a beta version to hockeyapp"
+  lane :beta do
+      gradle(
+        task: "assemble",
+        build_type: "debug"
+      )
+      changelog = changelog_from_git_commits(commits_count: 1)
+
+      android_set_version_code
+
+      mobile_center_upload(
+        api_token: "3167558d823d76048952dd3484138c87e5e543da",
+        owner_name: "james.hughes-magentys.io",
+        app_name: "ButtonClickApp",
+        apk: "app/build/outputs/apk/debug/app-debug.apk",
+        release_notes: changelog
+      )
+  end
+
 end
