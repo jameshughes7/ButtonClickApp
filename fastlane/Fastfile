@@ -36,18 +36,7 @@ platform :android do
     upload_to_play_store
   end
 
-  desc "Build custom changelog"
-    lane :build_custom_changelog do
-      changelog_notes = changelog_from_git_commits(
-        commits_count: "1",
-        merge_commit_filtering: "include_merges"
-      )
-      custom_changelog = ""
-      UI.message "Changelog: #{custom_changelog}"
-      custom_changelog
-    end
-
-  desc "Deploy a beta version to hockeyapp"
+  desc "Deploy a beta version to Mobile Center"
   lane :beta do
       gradle(
         task: "assemble",
