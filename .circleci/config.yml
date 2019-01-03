@@ -10,7 +10,7 @@ aliases:
   - &install_gems_android
       run:
         name: Bundle install
-        command: cd android && bundle check || bundle install --path vendor/bundle
+        command: bundle check || bundle install --path vendor/bundle
         environment:
           BUNDLE_JOBS: 4
           BUNDLE_RETRY: 3
