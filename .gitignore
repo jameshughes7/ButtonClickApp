@@ -12,7 +12,6 @@
 
 ### Gems
 .idea/kotlinc.xml
-fastlane/Pluginfile
 fastlane/README.md
 fastlane/report.xml
 Gemfile.lock

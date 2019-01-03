@@ -47,7 +47,7 @@ platform :android do
       android_set_version_code
 
       mobile_center_upload(
-        api_token: "3167558d823d76048952dd3484138c87e5e543da",
+        api_token: ENV['MOBILE_CENTER_API_TOKEN'],
         owner_name: "james.hughes-magentys.io",
         app_name: "ButtonClickApp",
         apk: "app/build/outputs/apk/debug/app-debug.apk",
