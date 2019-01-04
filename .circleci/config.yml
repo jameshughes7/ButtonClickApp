@@ -82,6 +82,8 @@ workflows:
           requires:
             - dev_test_android
       - dev_build_android:
+          requires:
+            - build_approved
           filters:
             branches:
               only:
