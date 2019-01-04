@@ -44,18 +44,8 @@ jobs:
   dev_test_android:
       <<: *defaults_android
       steps:
-        - checkout
-        - *restore_gems_cache_android
-        - *install_gems_android
-        - *save_gems_cache_android
-        - *gradle_restore_cache
-        - *gradle_depencencies
-        - *gradle_save_cache
-        - run:
-            name: Running Cucumber Tests
-            command: |
-              chmod +x ./androidtests.sh
-              ./androidtests.sh
+        - echo "Unable to test android emulator via CircleCI"
+        - echo "Need to use something like Firebase Test Lab"
 
   dev_build_android:
       <<: *defaults_android

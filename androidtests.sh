@@ -14,7 +14,7 @@ while [ "`~/Library/Android/sdk/platform-tools/adb shell getprop sys.boot_comple
 # done
 
 # Run the tests
-../gradlew connectedCheck -Pcucumber -Ptags="@wip"
+./gradlew connectedCheck -Pcucumber -Ptags="@wip"
 
 
 # Stop the background processes

@@ -36,11 +36,6 @@ platform :android do
     upload_to_play_store
   end
 
-  desc "Test a beta version prior to building"
-  lane :test_beta do
-    sh "../androidtests.sh"
-  end
-
   desc "Deploy a beta version to Mobile Center"
   lane :beta do
       gradle(
