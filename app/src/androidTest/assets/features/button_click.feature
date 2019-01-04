@@ -3,5 +3,6 @@ Feature: Click the button counter
   @wip
   Scenario: Successful Button Click
     Given I start the application
-    When I click the counter button
-    Then I expect to see the click counts
+    When I input text
+    And I click the Button
+    Then I expect to see my text

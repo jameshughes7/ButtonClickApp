@@ -41,6 +41,22 @@ defaults_android: &defaults_android
           JVM_OPTS: -Xmx3200m
 
 jobs:
+  dev_test_android:
+      <<: *defaults_android
+      steps:
+        - checkout
+        - *restore_gems_cache_android
+        - *install_gems_android
+        - *save_gems_cache_android
+        - *gradle_restore_cache
+        - *gradle_depencencies
+        - *gradle_save_cache
+        - run:
+            name: Running Cucumber Tests
+            command:
+              chmod +x ./androidtests.sh
+              ./androidtests.sh
+
   dev_build_android:
       <<: *defaults_android
       steps:

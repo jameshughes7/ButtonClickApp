@@ -17,17 +17,19 @@ class ButtonClickRobot {
         testRule.launchActivity(null)
     }
 
-    fun clickCounterButton() {
+    fun inputText() {
+        onView(withId(R.id.editText))
+            .perform(ViewActions.clearText())
+            .perform(ViewActions.typeText("James"))
+    }
+
+    fun clickConfirmationButton() {
         onView(withId(R.id.button)).perform(click())
     }
 
-    fun viewButtonCounts() {
+    fun viewTextOutput() {
         onView(withId(R.id.textView))
-            .perform(ViewActions.typeText("James"))
-            .check(
-            matches(
-                withText(containsString("James"))
-            )
+            .check(matches(withText(containsString("James")))
         )
     }
 }
