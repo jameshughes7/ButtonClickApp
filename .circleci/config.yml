@@ -77,7 +77,12 @@ workflows:
             branches:
               only:
                   - feature/circleci_cucumber_integration
-      - dev_build_android:
+      - build_approved:
           type: approval
           requires:
             - dev_test_android
+      - dev_build_android:
+          filters:
+            branches:
+              only:
+                  - feature/circleci_cucumber_integration
