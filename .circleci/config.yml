@@ -44,8 +44,8 @@ jobs:
   dev_test_android:
       <<: *defaults_android
       steps:
-        - echo "Unable to test android emulator via CircleCI"
-        - echo "Need to use something like Firebase Test Lab"
+        - run: echo "Unable to test android emulator via CircleCI"
+        - run: echo "Need to use something like Firebase Test Lab"
 
   dev_build_android:
       <<: *defaults_android
