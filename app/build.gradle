@@ -8,7 +8,7 @@ android {
         applicationId "com.example.jameshughes.buttonclickapp"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 26
+        versionCode 27
         versionName "1.0"
         testInstrumentationRunner getInstrumentation()
     }
