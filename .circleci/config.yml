@@ -1,0 +1,73 @@
+version: 2
+aliases:
+  - &restore_gems_cache_android
+    restore_cache:
+      name: Restore cache
+      keys:
+        - android-gems-{{ checksum "Gemfile.lock" }}
+        # Fall back to using the latest cache if no exact match is found.
+        - android-gems-
+  - &install_gems_android
+      run:
+        name: Bundle install
+        command: bundle check || bundle install --path vendor/bundle
+        environment:
+          BUNDLE_JOBS: 4
+          BUNDLE_RETRY: 3
+  - &save_gems_cache_android
+      save_cache:
+        key: android-gems-{{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
+  - &gradle_restore_cache
+      restore_cache:
+        key: android-jars-{{ checksum "./build.gradle" }}-{{ checksum  "./app/build.gradle" }}
+  - &gradle_depencencies
+      run:
+        name: Download Dependencies
+        command: ./gradlew androidDependencies --no-daemon --stacktrace --max-workers=2
+  - &gradle_save_cache
+      save_cache:
+        key: android-jars-{{ checksum "./build.gradle" }}-{{ checksum  "./app/build.gradle" }}
+        paths:
+          - ~.gradle
+
+# Default for Android Build machine
+defaults_android: &defaults_android
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-25-alpha
+    environment:
+          JVM_OPTS: -Xmx3200m
+
+jobs:
+  dev_build_android:
+      <<: *defaults_android
+      steps:
+        - checkout
+        - *restore_gems_cache_android
+        - *install_gems_android
+        - *save_gems_cache_android
+        - *gradle_restore_cache
+        - *gradle_depencencies
+        - *gradle_save_cache
+        - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+            path: app/build/reports
+            destination: reports
+#        - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+#            path: app/build/test-results
+        # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
+
+        - run:
+            name: Upload to Mobile Center
+            command: bundle exec fastlane beta
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - dev_build_android:
+          filters:
+            branches:
+              only:
+                  - develop
